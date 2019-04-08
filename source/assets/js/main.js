@@ -5,6 +5,7 @@
  * Distributed under terms of the MIT license.
  */
 $(document).ready(function() {
+  console.log("Cores: " + window.navigator.hardwareConcurrency);
   //var sendRequest = function(port) {
   //  console.log("Scanning for port " + port);
 
@@ -54,6 +55,13 @@ $(document).ready(function() {
       console.log("In Progress");
       showEndTime(port, startTime);
     };
+    client.onreadystatechange = function() {
+      if (client.readyState == XMLHttpRequest.DONE) {
+        console.log("I am on ready state changed of port: " + port);
+        showEndTime(port, startTime);
+        console.log(client.responseText);
+      }
+    }
     var startTime = Date.now();
     client.send()
   };
