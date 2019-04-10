@@ -1,7 +1,6 @@
 # Port Scanner 👁️
 
 ## Description
----
 
 Demonstrates possible way to identify services running at client workstation.
 The tool makes request to range of ports to identify services running on that
@@ -22,7 +21,6 @@ The strategy is inspired from similar well-known tool [JS-Recon][js-recon].
 
 
 ## Dependencies
----
 
 * [JQuery][jquery]
 * [Bootstrap][bootstrap]
@@ -30,7 +28,6 @@ The strategy is inspired from similar well-known tool [JS-Recon][js-recon].
 
 
 ## Install dependency
----
 
 ```
 make install
@@ -41,7 +38,7 @@ dependencies.
 
 
 ## Build
----
+
 
 ```
 make build
@@ -51,7 +48,7 @@ Will create an `output` directory. Open the file `index.html` at your browser.
 
 
 ## Run
----
+
 
 ``make run```
 
@@ -60,7 +57,7 @@ build``` to get output of latest code.
 
 
 ## Docker (Testing)
----
+
 ```
 make docker-build
 ```
@@ -76,7 +73,7 @@ It will start the container and bind on port `8080` of the host.
 
 
 ## License
----
+
 [GPL v3][gpl_v3]
 
 
