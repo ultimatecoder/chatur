@@ -101,6 +101,7 @@ $(document).ready(function() {
 
           if (port >= endPort) {
             $("#status").text("Finished").removeClass("badge-success").addClass("badge-secondary");
+            $("#btn-discover").text("Discover").removeClass("btn-danger").addClass("btn-primary");
             clearInterval(interval);
           }
           port++;
