@@ -26,6 +26,12 @@ The strategy is inspired from similar well-known tool [JS-Recon][js-recon].
 * [Bootstrap][bootstrap]
 * [npm][npm]
 
+### Testing (Optional)
+
+* [Docker][docker]
+* [Python][python]
+* [Selenium][selenium]
+
 
 ## Install dependency
 
@@ -50,7 +56,9 @@ Will create an `output` directory. Open the file `index.html` at your browser.
 ## Run
 
 
-``make run```
+```
+make run
+```
 
 It will run start the HTTP server on port `8080`. Make sure you have ran ```make
 build``` to get output of latest code.
@@ -72,6 +80,37 @@ make docker-run
 It will start the container and bind on port `8080` of the host.
 
 
+## End to End tests
+
+Tests are written in [Selenium][selenium] wrapper of [Python][python].
+
+### Build
+
+Install [Pipenv][pipenv] tool to create virtual-environment. Locate to
+`end-to-end-tests` directory. Make sure [Selenium][selenium] is installed.
+
+```
+pipenv shell
+```
+Use this command to activate virtual-environment prioer to running end to end
+tests.
+
+```
+pipenv install
+```
+
+Run this command once to install all the Python dependencies.
+
+```
+make test-end-to-end
+```
+
+This command will run bunch of functional tests on the tool. Make sure the tool
+is running at `http://localhost:8080`. You can find instrucions to run the tool.
+You can override the target host and port values by creating environment
+variables `TARGET_HOST` and `TARGET_PORT` respectively.
+
+
 ## License
 
 [GPL v3][gpl_v3]
@@ -82,3 +121,6 @@ It will start the container and bind on port `8080` of the host.
 [jquery]: https://jquery.com/
 [bootstrap]: https://getbootstrap.com/
 [npm]: https://www.npmjs.com/
+[python]: https://www.python.org/
+[selenium]: https://docs.seleniumhq.org/
+[pipenv]: https://pypi.org/project/pipenv/

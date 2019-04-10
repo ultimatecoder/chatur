@@ -1,15 +1,18 @@
 install:
-	npm install
+	cd javascript_port_scanner && npm install
 
 run:
-	./node_modules/.bin/http-server output
+	cd javascript_port_scanner && ./node_modules/.bin/http-server output
 
 build:
 	@echo "Building Javascript Port scanner at 'output' folder."
-	mkdir -p output && cp -r source/assets output && cp source/html/index.html output/index.html
+	cd javascript_port_scanner && mkdir -p output && cp -r source/assets output && cp source/html/index.html output/index.html
 
 docker-build:
-	docker build -t javascript_port_scanner:latest .
+	docker build -t javascript_port_scanner:latest javascript_port_scanner
 
 docker-run:
 	docker run --rm -p 8080:8080 javascript_port_scanner
+
+test-end-to-end:
+	cd end-to-end-tests && nosetests

@@ -6,16 +6,14 @@ RUN apk add make
 
 WORKDIR /srv/javascript_port_scanner
 
-COPY Makefile Makefile
-
 COPY package-lock.json package-lock.json
 
 COPY package.json package.json
 
-COPY source source
+COPY source/html/index.html index.html
+
+COPY source/assets assets
 
 RUN npm install --dev
 
-RUN make build
-
-ENTRYPOINT ["./node_modules/.bin/http-server", "output"]
+ENTRYPOINT ["./node_modules/.bin/http-server"]
