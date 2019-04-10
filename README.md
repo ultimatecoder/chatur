@@ -26,6 +26,18 @@ The strategy is inspired from similar well-known tool [JS-Recon][js-recon].
 
 * [JQuery][jquery]
 * [Bootstrap][bootstrap]
+* [npm][npm]
+
+
+## Install dependency
+---
+
+```
+make install
+```
+
+Make sure [npm][npm] is installed. This command will install npm based
+dependencies.
 
 
 ## Build
@@ -38,6 +50,14 @@ make build
 Will create an `output` directory. Open the file `index.html` at your browser.
 
 
+## Run
+---
+
+``make run```
+
+It will run start the HTTP server on port `8080`. Make sure you have ran ```make
+build``` to get output of latest code.
+
 
 ## License
 ---
@@ -48,3 +68,4 @@ Will create an `output` directory. Open the file `index.html` at your browser.
 [gpl_v3]: https://www.gnu.org/licenses/gpl-3.0.en.html
 [jquery]: https://jquery.com/
 [bootstrap]: https://getbootstrap.com/
+[npm]: https://www.npmjs.com/

@@ -1,0 +1,22 @@
+{
+  "name": "javascript_port_scanner",
+  "version": "1.0.0",
+  "description": "Javascript based Port scanner",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ultimatecoder/javascript_port_scanner.git"
+  },
+  "author": "",
+  "license": "",
+  "bugs": {
+    "url": "https://github.com/ultimatecoder/javascript_port_scanner/issues"
+  },
+  "homepage": "https://github.com/ultimatecoder/javascript_port_scanner#readme",
+  "devDependencies": {
+    "http-server": "^0.11.1"
+  }
+}
