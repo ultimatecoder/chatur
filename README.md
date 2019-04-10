@@ -59,6 +59,22 @@ It will run start the HTTP server on port `8080`. Make sure you have ran ```make
 build``` to get output of latest code.
 
 
+## Docker (Testing)
+---
+```
+make docker-build
+```
+
+It command will make the build of the docker image. Make sure [Docker][docker]
+is installed.
+
+```
+make docker-run
+```
+
+It will start the container and bind on port `8080` of the host.
+
+
 ## License
 ---
 [GPL v3][gpl_v3]
