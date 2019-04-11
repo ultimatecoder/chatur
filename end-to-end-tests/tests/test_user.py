@@ -75,7 +75,7 @@ class TestScanForNoServices(base.TestCase):
         )
 
         start_port_element.send_keys("8050")
-        end_port_element.send_keys("8053")
+        end_port_element.send_keys("8150")
         start_stop_button.click()
 
         self.assertEqual(scan_status.text, "Scanning")
@@ -158,4 +158,59 @@ class TestScanForNoServices(base.TestCase):
                 "Table of discovered ports should be empty because no "
                 "services are running between those port ranges."
             )
+        )
+
+
+class TestRunningMongo(base.TestCase):
+    """Test running Mongo service is detected."""
+
+    def test_mongo_service_detection(self):
+        self.get("/")
+        start_port_element = self.driver.find_element_by_xpath(
+            '//*[@id="start-port"]'
+        )
+        end_port_element = self.driver.find_element_by_xpath(
+            '//*[@id="end-port"]'
+        )
+        start_stop_button = self.driver.find_element_by_xpath(
+            '//*[@id="btn-discover"]'
+        )
+
+        table_element = self.driver.find_element_by_xpath(
+            '/html/body/div[2]/div[3]/div/div/table/tbody'
+        )
+        port_entries = table_element.find_elements_by_xpath(".//*")
+
+        self.assertEqual(
+            0,
+            len(port_entries),
+            (
+                "Table of discovered ports should be empty because scanning "
+                "has not started."
+            )
+        )
+
+        start_port_element.send_keys("27010")
+        end_port_element.send_keys("27030")
+        start_stop_button.click()
+
+        secounds = 120
+        wait = WebDriverWait(self.driver, secounds)
+        status = wait.until(
+            expected_conditions.text_to_be_present_in_element(
+                (By.ID, 'status'),
+                "Finished"
+            )
+        )
+
+        port, description = table_element.find_elements_by_xpath(".//td")
+
+        self.assertEqual(
+            port.text,
+            "27017"
+        )
+
+        self.assertEqual(
+            description.text,
+            "Mongo database system",
         )
