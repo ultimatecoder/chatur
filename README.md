@@ -79,6 +79,23 @@ docker run --rm --port 8080:8080 jaysinhp/javascript-port-scanner:latest
 
 Above command will fetch the latest image from the [Docker hub][docker_repository]. You can access the tool at port `http://localhost:8080`. Make sure the port `8080` is empty.
 
+
+## Lint
+
+```
+make javascript-lint
+```
+
+Will lint `source/assests/js/main.js` file against common Javascript
+conventions.
+
+```
+make html-lint
+```
+
+Will lint `source/html/index.html` file against common HTML5 based conventions.
+
+
 ### Local
 
 ```
