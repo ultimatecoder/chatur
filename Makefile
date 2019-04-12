@@ -16,3 +16,6 @@ docker-run:
 
 test-end-to-end:
 	cd end-to-end-tests && nosetests
+
+javascript-lint:
+	cd javascript_port_scanner && ./node_modules/.bin/eslint -c configurations/.eslintrc.yml source/assets/js/main.js
