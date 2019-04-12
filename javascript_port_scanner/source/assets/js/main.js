@@ -10,6 +10,7 @@ $(document).ready(function() {
   var portFileLoaded = false;
   var interval = null;
   var scanRunning = false;
+  var btnDiscover = $("#btn-discover");
 
   /*
    * Approach -2 (Using readyState property)
@@ -19,25 +20,25 @@ $(document).ready(function() {
     var startTime = null;
     var headerTime = null;
     var responseTime = null;
-    var timeTook = null;
     var deferred = $.Deferred();
 
     var xhr = new XMLHttpRequest();
+
+
     xhr.onreadystatechange = function () {
-      if (xhr.readyState === 1) {
-        startTime = Date.now();
-      } else if (xhr.readyState === 2) {
-        headerTime = (Date.now() - startTime);
+      if (xhr.readyState === 2) {
+        responseTimeHeader = (Date.now() - startTime);
+        console.log("I am in state 2 for port " + port + " response time for header: " + responseTimeHeader);
       } else if (xhr.readyState === 4) {
         responseTime = (Date.now() - startTime);
-        avgResponseTime = (headerTime + responseTime) / 2.0;
-        timeTook = avgResponseTime;
-        deferred.resolve({"port": port, "timeTook": timeTook});
+        console.log("I am in state 4 for port " + port + " response time: " + responseTime);
+        deferred.resolve({"port": port, "timeTook": responseTime});
       }
     };
-    xhr.open('GET', "http://127.0.0.1:" + port, true);
-    xhr.send(null);
 
+    xhr.open('GET', "http://127.0.0.1:" + port, true);
+    startTime = Date.now();
+    xhr.send();
     return deferred;
   };
 
@@ -62,6 +63,20 @@ $(document).ready(function() {
   };
   */
 
+  var constructPortDescription = function(port) {
+    var row = $("<tr></tr>");
+    dataPort = $("<td></td>").text(port);
+    if (!(port in TCPlist)) {
+      description = "Unknown";
+    } else {
+      description = TCPlist[port];
+    }
+    dataDescription = $("<td></td>").text(description);
+    row.append(dataPort);
+    row.append(dataDescription);
+    return row
+  };
+
   var readPortsFile = function(location) {
     return $.getJSON(location, function(result) {
       TCPlist = result;
@@ -72,50 +87,51 @@ $(document).ready(function() {
     portFileLoaded = true;
   });
 
+  $("#btn-discover").on("click", function(event) {
+    if ($("#btn-discover").hasClass("btn-primary")) {
+      $("#btn-discover").text("Stop").removeClass("btn-primary").addClass("btn-danger");
+      $("#status").text("Scanning").removeClass("badge-secondary").addClass("badge-success");
+    } else {
+      $("#btn-discover").text("Discover").removeClass("btn-danger").addClass("btn-primary");
+      $("#status").text("Finished").removeClass("badge-success").addClass("badge-secondary");
+    }
+  });
+
   $("#port-form").submit(function(event) {
     if (portFileLoaded) {
-      if (! scanRunning) {
-        scanRunning = true;
-        $("#status").text("Scanning").removeClass("badge-secondary").addClass("badge-success");
-        $("#btn-discover").text("Stop").removeClass("btn-primary").addClass("btn-danger");
-        var startPort = parseInt($("#start-port").val());
-        var endPort = parseInt($("#end-port").val());
-        var port = startPort;
+      var startPort = parseInt($("#start-port").val());
+      var endPort = parseInt($("#end-port").val());
+      var port = startPort;
+      var requestInProgress = false;
+      var interval_time = 1;  // Value in Microsecounds.
 
-        interval = setInterval(function() {
+
+      var httpRequestInterval = setInterval(function() {
+        if (! requestInProgress) {
+          requestInProgress = true;
           sendRequest(port).done(function(result) {
-            if (result["timeTook"] >= 100){
-              row = $("<tr></tr>");
-              dataPort = $("<td></td>").text(result["port"]);
-              if (!(result["port"] in TCPlist)) {
-                description = "Unknown";
-              } else {
-                description = TCPlist[result["port"]];
-              }
-              dataDescription = $("<td></td>").text(description);
-              row.append(dataPort);
-              row.append(dataDescription);
+            var thresold = 100;  // Value in Microsecounds
+            if (result["timeTook"] >= thresold) {
+              row = constructPortDescription(result["port"]);
               $("tbody").append(row);
             }
+          }).done(function(result) {
+            port++;
+            if (port > endPort) {
+              $("#status").text("Finished").removeClass("badge-success").addClass("badge-secondary");
+              $("#btn-discover").text("Discover").removeClass("btn-danger").addClass("btn-primary");
+              clearInterval(httpRequestInterval);
+            }
+            return result;
+          }).done(function(result) {
+            requestInProgress = false;
+            return result;
           });
-
-          if (port >= endPort) {
-            $("#status").text("Finished").removeClass("badge-success").addClass("badge-secondary");
-            $("#btn-discover").text("Discover").removeClass("btn-danger").addClass("btn-primary");
-            clearInterval(interval);
-          }
-          port++;
-        }, 2000);
-        event.preventDefault();
-      } else {
-        $("#status").text("Finished").removeClass("badge-success").addClass("badge-secondary");
-        $("#btn-discover").text("Discover").removeClass("btn-danger").addClass("btn-primary");
-        clearInterval(interval);
-        scanRunning = false;
-        event.preventDefault();
-      }
+        }
+      }, interval_time);
+      event.preventDefault();
     } else {
       alert("Port file is still loading. Please try after some time.");
     }
-  });
+  })
 });
