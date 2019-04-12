@@ -1,5 +1,10 @@
 # Port Scanner 👁️
 
+![License][badge_license]
+
+![Docker][badge_docker]
+
+
 ## Description
 
 Demonstrates possible way to identify services running at client workstation.
@@ -66,6 +71,16 @@ build``` to get output of latest code.
 
 ## Docker (Testing)
 
+### Docker hub
+
+```
+docker run --rm --port 8080:8080 jaysinhp/javascript-port-scanner:latest
+```
+
+Above command will fetch the latest image from the [Docker hub][docker_repository]. You can access the tool at port `http://localhost:8080`. Make sure the port `8080` is empty.
+
+### Local
+
 ```
 make docker-build
 ```
@@ -124,3 +139,6 @@ variables `TARGET_HOST` and `TARGET_PORT` respectively.
 [python]: https://www.python.org/
 [selenium]: https://docs.seleniumhq.org/
 [pipenv]: https://pypi.org/project/pipenv/
+[badge_license]: https://img.shields.io/github/license/ultimatecoder/javascript_port_scanner.svg?style=plastic
+[badge_docker]: https://dockeri.co/image/jaysinhp/javascript-port-scanner
+[docker_repository]: https://hub.docker.com/r/jaysinhp/javascript-port-scanner
