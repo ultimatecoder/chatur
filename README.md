@@ -89,6 +89,12 @@ make javascript-lint
 Will lint `source/assests/js/main.js` file against common Javascript
 conventions.
 
+```
+make html-lint
+```
+
+Will lint `source/html/index.html` file against common HTML5 based conventions.
+
 
 ### Local
 

@@ -19,3 +19,6 @@ test-end-to-end:
 
 javascript-lint:
 	cd javascript_port_scanner && ./node_modules/.bin/eslint -c configurations/.eslintrc.yml source/assets/js/main.js
+
+html-lint:
+	cd javascript_port_scanner && ./node_modules/.bin/html-validate source/html/*.html
