@@ -165,52 +165,17 @@ class TestRunningMongo(base.TestCase):
     """Test running Mongo service is detected."""
 
     def test_mongo_service_detection(self):
-        self.get("/")
-        start_port_element = self.driver.find_element_by_xpath(
-            '//*[@id="start-port"]'
-        )
-        end_port_element = self.driver.find_element_by_xpath(
-            '//*[@id="end-port"]'
-        )
-        start_stop_button = self.driver.find_element_by_xpath(
-            '//*[@id="btn-discover"]'
-        )
+        self.port_scan(27010, 27030)
+        self.assert_port_in_result("27017", "Mongo database system")
 
-        table_element = self.driver.find_element_by_xpath(
-            '/html/body/div[2]/div[3]/div/div/table/tbody'
-        )
-        port_entries = table_element.find_elements_by_xpath(".//*")
 
-        self.assertEqual(
-            0,
-            len(port_entries),
-            (
-                "Table of discovered ports should be empty because scanning "
-                "has not started."
-            )
-        )
+class TestCloudNativeServer(base.TestCase):
+    """ User story-4
+    Story: Assume CloudNative service and MongoDB service is running. Scan
+    between ports 8050 and 9000 should detect only CloudNative service on port
+    8080.
+    """
 
-        start_port_element.send_keys("27010")
-        end_port_element.send_keys("27030")
-        start_stop_button.click()
-
-        secounds = 120
-        wait = WebDriverWait(self.driver, secounds)
-        status = wait.until(
-            expected_conditions.text_to_be_present_in_element(
-                (By.ID, 'status'),
-                "Finished"
-            )
-        )
-
-        port, description = table_element.find_elements_by_xpath(".//td")
-
-        self.assertEqual(
-            port.text,
-            "27017"
-        )
-
-        self.assertEqual(
-            description.text,
-            "Mongo database system",
-        )
+    def test_only_cloud_native_service_is_detected(self):
+        self.port_scan(8050, 9000)
+        self.assert_port_in_result("8080", "Unknown")
