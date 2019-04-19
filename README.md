@@ -1,4 +1,4 @@
-# Port Scanner 👁️
+# Chatur: A Javascript based Port Scanner👁️
 
 ![License][badge_license]
 
@@ -156,6 +156,6 @@ variables `TARGET_HOST` and `TARGET_PORT` respectively.
 [python]: https://www.python.org/
 [selenium]: https://docs.seleniumhq.org/
 [pipenv]: https://pypi.org/project/pipenv/
-[badge_license]: https://img.shields.io/github/license/ultimatecoder/javascript_port_scanner.svg?style=plastic
-[badge_docker]: https://dockeri.co/image/jaysinhp/javascript-port-scanner
-[docker_repository]: https://hub.docker.com/r/jaysinhp/javascript-port-scanner
+[badge_license]: https://img.shields.io/github/license/ultimatecoder/chatur.svg?style=plastic
+[badge_docker]: https://dockeri.co/image/jaysinhp/chatur
+[docker_repository]: https://hub.docker.com/r/jaysinhp/chatur

@@ -1,5 +1,5 @@
 {
-  "name": "javascript_port_scanner",
+  "name": "chatur",
   "version": "1.0.0",
   "description": "Javascript based Port scanner",
   "main": "index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ultimatecoder/javascript_port_scanner.git"
+    "url": "git+https://github.com/ultimatecoder/chatur.git"
   },
   "author": "",
   "license": "",
   "bugs": {
-    "url": "https://github.com/ultimatecoder/javascript_port_scanner/issues"
+    "url": "https://github.com/ultimatecoder/chatur/issues"
   },
-  "homepage": "https://github.com/ultimatecoder/javascript_port_scanner#readme",
+  "homepage": "https://github.com/ultimatecoder/chatur#readme",
   "devDependencies": {
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
