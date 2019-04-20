@@ -179,3 +179,29 @@ class TestCloudNativeServer(base.TestCase):
     def test_only_cloud_native_service_is_detected(self):
         self.port_scan(8050, 9000)
         self.assert_port_in_result("8080", "Unknown")
+
+
+class TestStopAfterStart(base.TestCase):
+    """User story-5
+    Story: User should be able to stop the scanning process after starting it.
+    """
+
+    def test_user_is_able_stop_stop_scan_process_once_started(self):
+        self.get("/")
+        self.start_port.send_keys("8090")
+        self.start_port.send_keys("10000")
+        self.start_stop_button.click()
+
+        self.assertEqual(
+            self.start_stop_button.get_attribute("class"),
+            "btn btn-danger"
+        )
+        self.assertEqual(self.scan_status.text, "Scanning")
+
+        self.start_stop_button.click()
+
+        self.assertEqual(
+            self.start_stop_button.get_attribute("class"),
+            "btn btn-primary"
+        )
+        self.assertEqual(self.scan_status.text, "Finished")
