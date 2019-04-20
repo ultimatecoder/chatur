@@ -178,7 +178,7 @@ class TestCloudNativeServer(base.TestCase):
 
     def test_only_cloud_native_service_is_detected(self):
         self.port_scan(8050, 9000)
-        self.assert_port_in_result("8080", "Unknown")
+        self.assert_port_in_result("8084", "Unknown")
 
 
 class TestStopAfterStart(base.TestCase):
