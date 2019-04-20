@@ -59,19 +59,9 @@ class TestCase(unittest.TestCase):
             wait  : Expected wait time until the scanning process will end.
         """
         self.get("/")
-        start_port_element = self.driver.find_element_by_xpath(
-            '//*[@id="start-port"]'
-        )
-        end_port_element = self.driver.find_element_by_xpath(
-            '//*[@id="end-port"]'
-        )
-        start_stop_button = self.driver.find_element_by_xpath(
-            '//*[@id="btn-discover"]'
-        )
-
-        start_port_element.send_keys("27010")
-        end_port_element.send_keys("27030")
-        start_stop_button.click()
+        self.start_port.send_keys("27010")
+        self.end_port.send_keys("27030")
+        self.start_stop_button.click()
 
         secounds = 120
         wait = WebDriverWait(self.driver, secounds)
@@ -113,6 +103,41 @@ class TestCase(unittest.TestCase):
             descriptions,
             "Desired description do not found in description result"
         )
+
+    def _find_element_by_xpath(self, xpath):
+        """Finds element by given xpath and returns an element
+
+        Common method to avoid the repetition of calling xpath for finding
+        and element.
+        """
+        return self.driver.find_element_by_xpath(xpath)
+
+    @property
+    def start_port(self):
+        """Returns Start port input box
+
+        Make sure you have loaded homepage before trying to read this property.
+        """
+        return self.driver.find_element_by_xpath('//*[@id="start-port"]')
+
+    @property
+    def end_port(self):
+        """Returns End port input box
+
+        Make sure you have loaded homepage before trying to read this property.
+        """
+        return self.driver.find_element_by_xpath('//*[@id="end-port"]')
+
+
+    @property
+    def start_stop_button(self):
+        """Returns Start and Stop scan button element"""
+        return self.driver.find_element_by_xpath('//*[@id="btn-discover"]')
+
+    @property
+    def scan_status(self):
+        """Returns Scan status label"""
+        return self.driver.find_element_by_id("status")
 
     def tearDown(self):
         self.driver.close()
