@@ -59,8 +59,8 @@ class TestCase(unittest.TestCase):
             wait  : Expected wait time until the scanning process will end.
         """
         self.get("/")
-        self.start_port.send_keys("27010")
-        self.end_port.send_keys("27030")
+        self.start_port.send_keys(start)
+        self.end_port.send_keys(end)
         self.start_stop_button.click()
 
         secounds = 120
